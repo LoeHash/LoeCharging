@@ -1,0 +1,7 @@
+name: LoeCharging
+version: '${project.version}'
+main: me.loe.loecharging.LoeCharging
+softdepend: ["PlaceholderAPI"]
+commands:
+  lcg:
+    cn:

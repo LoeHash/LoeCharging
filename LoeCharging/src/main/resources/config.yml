@@ -1,0 +1,149 @@
+bStats: true
+GUI:
+  升级界面:
+    标题: "&b&l升级界面"
+    布局:
+      - "YYYYYYYYY"
+      - "YBIBCBEBY"
+      - "YYYYYYYYY"
+    物品集:
+      Y:
+        作用: "分隔"
+        Id: 160
+        Data: 14
+        显示名: "&c&l分隔板"
+        Lore:
+          - "&c我是一个分隔板~"
+      B:
+        作用: "分隔"
+        显示名: "&c&l提示"
+        Id: 160
+        Data: 15
+        Lore:
+          - "&c左边放入你要升级的物品"
+          - "&e右边放入充能石"
+      C:
+        作用: "确认"
+        显示名: "&e&l点击升级"
+        Id: 426
+      I:
+        Id: 0
+        作用: "升级物品"
+      E:
+        Id: 0
+        作用: "充能物品"
+  继承界面:
+    标题: "&c&l继承界面"
+    布局:
+      - "YYYYYYYYY"
+      - "YBIBCBEBY"
+      - "YYYYYYYYY"
+    物品集:
+      Y:
+        作用: "分隔"
+        Id: 160
+        Data: 14
+        显示名: "&c&l分隔板"
+        Lore:
+          - "&c我是一个分隔板~"
+      B:
+        作用: "分隔"
+        显示名: "&c&l提示"
+        Id: 160
+        Data: 15
+        Lore:
+          - "&c左边放入被继承的物品"
+          - "&e右边放入继承的物品"
+      C:
+        作用: "确认"
+        显示名: "&e&l点击升级"
+        Id: 426
+      I:
+        Id: 0
+        作用: "被继承物品"
+      E:
+        Id: 0
+        作用: "继承物品"
+
+
+ChargeStone:
+  test1:
+    name: "充能石I"
+    value: 50 #提供50的能量
+  test2:
+    name: "充能石II"
+    value: 100 #提供100的能量
+
+#哪种物品可以被升级
+#具体到某一行lore
+#同时经验条将会显示在这一行
+#模糊匹配, 包含即可
+MainItemMatch: "已被尘封"
+
+#提供经验值的怪物 (mm内部名)
+#基本语法: mm怪物内部名:经验值
+MonsterGroup:
+  怪物组1:
+    - "域外士兵:50"
+    - "域外魔种:60"
+    - "域外先锋:100"
+  怪物组2:
+    - "沙漠炎蝎:200"
+
+
+#全局枚举等级经验
+#1:100 表示从0升到1级需要100经验
+Global-Level-Enum:
+  - "1:100"
+  - "2:200"
+  - "3:300"
+  - "4:400"
+  - "5:500"
+  - "6:600"
+  - "7:700"
+  - "8:800"
+  - "9:900"
+  - "10:1000"
+  - "11:1100"
+  - "12:1200"
+  - "13:1300"
+  - "14:1400"
+  - "15:1500"
+  - "16:1600"
+  - "17:1700"
+  - "18:1800"
+  - "19:1900"
+  - "20:2000"
+
+#全局等级经验公式
+#目前内部提供的变量:
+#<current_level>
+Global-Level-Formula:
+  - "f1:current_item_level * 5"
+  - "f2:current_item_level ^ 2"
+
+Charging-Item:
+  test1:
+    MatchName: "&c无敌的大宝剑"
+    MaxLevel: 25
+    LevelEvents:
+      1:
+        - "[command]#bc %player_name% 成功把 <current_item_name> 升级至1级!"
+      5:
+        - "[command]#eco give %player_name% 666"
+      25:
+        - "[replace]#MythicMobs#神奇又无敌的大宝剑"
+    Growing-Ways: "ALL"         #或者MonsterGroup/ChargeItem
+    MonsterGroup:
+      - "怪物组1"                #那些怪物组可以提供经验值
+    Experience: "Formula"              #经验增长方式:Enum, Formula; 注意, 如果使用Enum, 则最大等级优先遵循Enum
+    Formula-Type: "f1"          #使用哪个formula, 如果是Enum增长方式此项可不写
+    Change-Lore:
+      - "&c暴击几率: current_item_level * 5%"
+      - "&c物理伤害: current_item_level * 600"
+      - "&6当前等级: &ecurrent_item_level"
+      - "&6当前经验: current_item_exp"
+      - "&5下一级所需经验: &ccurrent_item_nextexp"
+    #检查的槽位
+    Check-Slot:
+      - "MainHand"
